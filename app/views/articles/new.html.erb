@@ -1,6 +1,6 @@
 <h1> create a new article</h1>
 <% if @article.errors.any? %>
-<h3> some errors occured <h3>
+<h3> Some errors occured. See below for details <h3>
 <%@article.errors.full_messages.each do |msg| %>
 <ul>
   <li><%= msg %> </li>
