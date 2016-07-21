@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # all of article related path CRUD
   resources :articles
 
+  get 'signup', to: 'users#new'
+  resources :users, except: [:new]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
