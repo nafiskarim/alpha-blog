@@ -19,8 +19,11 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
+			# new user will directly be logged into his account 
+			session[:user_id] = @user.id
 			flash[:success] = "Welcome to blog #{@user.username}"
-			redirect_to articles_path
+			#.. and redirected to his profile page
+			redirect_to user_path(@user.id)
 		else
 			render 'new'
 		end
