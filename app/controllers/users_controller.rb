@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   # for creating the instance variable @user before edit, update and show method
   before_action :set_user, only: [:edit, :update, :show]
-  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
+  before_action :require_admin, only: [:destroy]
 
 	def index
 		@users = User.all
@@ -47,6 +48,13 @@ class UsersController < ApplicationController
 
 	end
 
+	def destroy
+		@user = User.find(params[:id])
+		@user.destroy
+		flash[:danger] = "User and all of it's articles has been deleted"
+		redirect_to users_path
+	end
+
 	private
 	def user_params
 		params.require(:user).permit(:username, :email, :password)
@@ -65,4 +73,10 @@ class UsersController < ApplicationController
   	
   end
 
+  def require_admin
+  	if logged_in? and !current_user.admin?
+  		flash[:danger] = "only admin user can perform this task"
+  	end
+  end
+  
 end
