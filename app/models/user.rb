@@ -1,4 +1,5 @@
 class  User < ActiveRecord::Base
+	#user has many articles and all articles will be deleted if the user gets deleted.
 	has_many :articles, dependent: :destroy
 	before_save { self.email = email.downcase }
 	
